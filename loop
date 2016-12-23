@@ -1,0 +1,80 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+		<title>无标题文档</title>
+		<link rel="stylesheet" type="text/css" href="css/css.css">
+		<!--<script type="text/javascript" src="js/js.js"></script>-->
+		<script>
+		window.onload=function (){
+		var oPrev = document.getElementById('prev');
+		var oNext = document.getElementById('next');
+		var oP = document.getElementById('p1');
+		var oStrong = document.getElementById('strong1');
+		var oImg = document.getElementById('img1');
+		var oBtn = document.getElementsByTagName('input');/*input--arr*/
+		var oSpan = document.getElementsByTagName('span');
+
+	var arrUrl = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'];
+	var arrText = ['普通游戏','机器游戏','性感游戏','古装游戏'];
+	var num = 0;
+	var onOff = true;
+
+	oBtn[0].onclick =function (){
+		onOff = true;
+		oSpan[0].innerHTML ='图片可从最后一张跳转到第一张循环切换';
+	};
+	oBtn[1].onclick = function (){
+		onOff = false;
+		oSpan[0].innerHTML = '图片只能到最后一张或只能到第一张切换';
+	};
+	function fnTab(){
+		oP.innerHTML = arrText[num];
+		oStrong.innerHTML = num+1 +'/'+arrText.length;
+		oImg.src = arrUrl[num];
+	}
+	fnTab();
+	oPrev.onclick = function (){
+		num --;		
+		if( num == -1 ){
+
+			if(onOff){
+				num = arrText.length-1;
+			}
+			else{
+				alert('这是第一张了，不能再往前');
+				num = 0;
+			}
+		}
+		fnTab();
+	};
+	oNext.onclick = function (){
+			num++;
+			if( num == arrText.length){
+				if(onOff){
+					num = 0;
+				}
+				else{
+					alert('已经到最后一张啦~');
+					num =arrText.length-1;
+				}
+			}		
+			fnTab();
+		};
+	};
+		</script>
+	</head>
+	<body>
+		<input type="button" value="循环切换"/>
+		<input type="button" value="顺序切换"/>
+
+		<div id="box">
+			<span>图片可从最后一张跳转到第一张循环切换</span>
+			<a id="prev" href="javascript:;"><</a>
+			<a id="next" href="javascript:;">></a>
+			<p id="p1">图片文字加载中</p>
+			<strong id="strong1">图片数量计算中</strong>
+			<img id="img1"/>
+		</div>
+	</body>
+</html>
