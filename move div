@@ -1,0 +1,54 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>null</title>
+		<style>
+			#div1{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+			}
+		</style>
+		<script>
+			window.onload = function (){
+				var i =0;
+				var oDiv = document.getElementById('div1');
+
+				var oDivX= getStyle(oDiv, 'width');
+				var oDivY= getStyle(oDiv, 'height');
+				var aX = parseInt(oDivX) /2;
+				var aY = parseInt(oDivY) /2;
+				document.onmousemove = function (ev){
+					var ev = ev || event;
+					
+					var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+
+					var scrollLeft = document.documentElement.scrollLeft||document.body.scrollLeft;
+
+					oDiv.style.left = ev.clientX -aX+ scrollLeft + 'px';
+					oDiv.style.top = ev.clientY -aY+ scrollTop + 'px';
+
+				}
+					function getStyle(obj, attr) 
+					{ 
+						if(obj.currentStyle) 
+						{ 
+							return obj.currentStyle[attr]; 
+						} 
+						else 
+						{ 
+							return getComputedStyle(obj,false)[attr]; 
+						} 
+					} 
+			}
+		</script>
+	</head>
+	<body style="height:2000px; width:2000px" >
+		
+		<div id="div1">
+			
+		</div>
+	</body>
+</html>
