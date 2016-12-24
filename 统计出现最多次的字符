@@ -1,0 +1,47 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<meta charset = 'utf-8'>
+		<title>statistics</title>
+		<script>
+			window.onload = function (){
+				var oText = document.getElementById('text');
+				var oBtn = document.getElementById('button');
+			   	oBtn.onclick = function (){
+			   		let oTextValue = oText.value;
+			   		let mAx = findMaxDuplicateChar(oTextValue);
+			   		alert(mAx);
+			   	}
+				function findMaxDuplicateChar(str){
+					if(str.length == 1){
+						return str;
+					}
+					let charObj = {};
+					for(let i=0;i<str.length;i++){
+						if(!charObj[str.charAt(i)]){
+							charObj[str.charAt(i)] = 1;
+						}
+						else{
+							charObj[str.charAt(i)] += 1;
+						}
+					}
+					let maxChar = '',maxValue = 1;
+					for(var k in charObj){
+						if(charObj[k] >= maxValue){
+							maxChar = k;
+							maxValue = charObj[k];
+						}
+					}
+					return maxChar;
+				}		
+			}
+		</script>
+	</head>
+	<body>
+	<div>
+	 	<p> 判断字符串中出现次数最多的字母 </p>
+			<input id="text" type="text" value="请输入字符">
+			<input id="button" type="button" value="计算"/>
+	</div>
+	</body>
+</html>
