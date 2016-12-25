@@ -1,0 +1,103 @@
+<!Doctype HTML>
+<html>
+<head>
+<meta charset = 'utf-8'>
+<title></title>
+<style>
+#div1{
+	width: 100px;
+	height: 100px;
+	background: red;
+	position: absolute;
+	z-index: 2;
+}
+#img1{
+	position: absolute;
+	left: 500px;
+	top: 200px;
+}
+</style>
+<script>
+	window.onload = function (){
+
+		var oDiv1 = document.getElementById('div1');
+		var oImg1 = document.getElementById('img1');
+
+		drag(oDiv1);
+		function drag(obj){
+
+			obj.onmousedown = function (){
+			var ev = ev || event;
+
+			var disX = ev.clientX - this.offsetLeft;
+			var disY = ev.clientY - this.offsetTop;
+
+			if (obj.setCapture){
+				obj.setCapture();
+			}
+
+			document.onmousemove = function (ev){
+			var ev = ev || event;
+				var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+				/*滚动条高度*/
+
+				var scrollLeft = document.documentElement.scrollLeft||document.body.scrollLeft;/*滚动条宽度*/
+
+				var L = ev.clientX - disX;
+				var T = ev.clientY - disY;
+				if (L<0){
+					L = 0;
+				}
+				else if ( L > document.documentElement.clientWidth - obj.offsetWidth){	
+					L = document.documentElement.clientWidth - obj.offsetWidth;
+					}
+				if ( T < 0 ){
+					T = 0;
+				}
+				else if ( T > document.documentElement.clientHeight -  obj.offsetHeight){
+					T = document.documentElement.clientHeight - obj.offsetHeight;
+				}
+				var L1 = L;
+				var R1 = L + obj.offsetWidth;
+				var T1 = T;
+				var B1 = T + obj.offsetHeight;
+
+				var L2 = oImg1.offsetLeft;
+				var R2 = L2 + oImg1.offsetWidth;
+				var T2 = oImg1.offsetTop;
+				var B2 = T2 + oImg1.offsetHeight;
+
+				if (R1 < L2 || L1 > R2 || B1 < T2 || T1 > B2){
+					oImg1.src = 'images/1.jpg';
+				}
+				else{
+					oImg1.src = 'images/2.jpg';
+				}
+
+
+
+				obj.style.left = L +scrollLeft+'px';
+				obj.style.top = T +scrollTop+ 'px';
+			}
+			document.onmouseup = function (){
+				document.onmousemove = document.onmouseup = null;
+
+				if ( obj.releaseCapture ){
+					obj.releaseCapture();
+				}
+			}
+			return false;
+
+		}
+	}
+
+}
+</script>
+</head>
+<body>
+
+	<div id="div1"></div>
+	<img id="img1" src="images/1.jpg" alt="">
+
+</body>
+</html>
