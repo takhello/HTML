@@ -1,0 +1,69 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>无</title>
+		<style>
+			#div1{
+				width: 50px;
+				height: 100px;
+				background: red;
+				position: absolute;/*必须加 绝对定位*/
+			}
+			#div2{
+				margin: 300px 300px;
+				width: 100px;
+				height: 100px;
+				background: blue;
+				position: absolute;
+			}
+			#img1{
+				position: absolute;
+			}
+		</style>
+<script>
+window.onload = function (){
+
+	var oDiv1 = document.getElementById('div1');
+	var oImg = document.getElementById('img1');
+
+oImg.onmousedown = function (ev){
+
+	var ev = ev || event;
+
+	var disX = ev.clientX - this.offsetLeft;
+	var disY = ev.clientY - this.offsetTop;
+
+	if( oImg.setCapture){
+		oImg.setCapture();/*设置全局捕获*/
+	}
+	
+
+	document.onmousemove = function(ev) {
+	var ev = ev || event;
+
+		oImg.style.left = ev.clientX - disX + 'px';
+		oImg.style.top = ev.clientY - disY + 'px';
+	}
+
+	document.onmouseup = function (){
+
+		document.onmousemove = document.onmouseup = null;
+		if(oImg.releaseCapture){
+			oImg.releaseCapture();
+		}
+	}
+
+		return false;/*阻止默认行为*/
+	}
+}
+
+</script>
+	</head>
+
+	<body>
+			sdfdfsdf
+		<div id="div1"></div>
+		<img id="img1" src="images/1.jpg" alt="">
+	</body>
+</html>
