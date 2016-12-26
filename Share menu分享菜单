@@ -1,0 +1,66 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<meta charset='utf-8'/>
+		<title></title>
+		<style>
+		#div1{
+			width: 100px;
+			height: 200px;
+			background: #ccc;
+			position: absolute;
+			left: -100px;
+			top: 50px;
+		}
+		#div2{
+			width: 20px;
+			height: 60px;
+			line-height: 20px;
+			text-align: center;
+			background: yellow;
+			position: absolute;
+			left: 100px;
+			top: 70px;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<div id="div2">分享菜单</div>
+		</div>
+	</body>
+	<script>
+
+	var oDiv1 = document.getElementById('div1');
+
+	oDiv1.onmouseover = function (){
+		startMove(0);
+	}
+	oDiv1.onmouseout = function (){
+		startMove(-100);
+	}
+	var timer = null;
+
+	function startMove(iTarget){
+		clearInterval(timer);
+		timer = setInterval(function (){
+
+			var iSpeed = 0;
+			if( oDiv1.offsetLeft < iTarget ){
+				iSpeed = 10;
+			}
+			else{
+				iSpeed = -10;
+			}
+			if(oDiv1.offsetLeft == iTarget){
+				clearInterval(timer);
+			}
+			else{
+				oDiv1.style.left = oDiv1.offsetLeft + iSpeed + 'px';
+			}
+		},30);
+
+	}
+
+	</script>
+</html>
