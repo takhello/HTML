@@ -1,0 +1,176 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<meta charset = 'utf-8'>
+		<title>滚动条</title>
+		<style>
+			#div1{
+				width: 30px;
+				height: 500px;
+				background: black;
+				position: absolute;
+				left: 10px;
+				top: 10px;
+			}
+			#div2{
+				width: 30px;
+				height: 30px;
+				background: red;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+
+			#div3{
+				width: 498px;
+				height: 498px;
+				border: 2px solid green;
+				position: absolute;
+				left: 50px;
+				top: 10px;
+			}
+			#div4{
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+
+		</style>
+	</head>
+	<body>
+		
+		<div id="div1">
+			<div id="div2"></div>
+		</div>
+		<div id="div3">
+			<div id="div4">
+				scrollHeight: 获取对象的滚动高度。
+
+			scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离
+
+			scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离
+
+			scrollWidth:获取对象的滚动宽度
+
+			offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度
+
+			offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置
+
+			offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置
+
+			event.clientX 相对文档的水平座标
+
+			event.clientY 相对文档的垂直座标
+
+			event.offsetX 相对容器的水平坐标
+
+			event.offsetY 相对容器的垂直坐标
+
+			document.documentElement.scrollTop 垂直方向滚动的值
+
+			event.clientX+document.documentElement.scrollTop 相对文档的水平座标+垂直方向滚动的量
+
+			以上主要指IE之中，FireFox差异如下：
+
+			IE6.0、FF1.06+：
+
+			clientWidth = width + padding
+
+			clientHeight = height + padding
+
+			offsetWidth = width + padding + border
+
+			offsetHeight = height + padding + border
+
+			IE5.0/5.5：
+
+			clientWidth = width - border
+
+			clientHeight = height - border
+
+			offsetWidth = width
+
+			offsetHeight = height
+
+
+			HTML控件offsetTop、scrollTop等属性
+			假设 obj 为某个 HTML 控件。
+
+			obj.offsetTop 指 obj 距离上方或上层控件的位置，整型，单位像素。
+
+			obj.offsetLeft 指 obj 距离左方或上层控件的位置，整型，单位像素。
+
+			obj.offsetWidth 指 obj 控件自身的宽度，整型，单位像素。
+
+			obj.offsetHeight 指 obj 控件自身的高度，整型，单位像素。
+
+			我们对前面提到的“上方或上层”与“左方或上层”控件作个说明。
+			scrollHeight
+			IE、Opera 认为 scrollHeight 是网页内容实际高度，可以小于 clientHeight。 NS、FF 认为 scrollHeight 是网页内容高度，不过最小值是 clientHeight。
+			简单地说
+			clientHeight 就是透过浏览器看内容的这个区域高度。
+			scrollTop
+			“卷”起来的高度值
+			1.offsetTop :
+			当前对象到其上级层顶部的距离.
+			不能对其进行赋值.设置对象到页面顶部的距离请用style.top属性.
+			2.offsetLeft :
+			当前对象到其上级层左边的距离.
+			不能对其进行赋值.设置对象到页面左部的距离请用style.left属性.
+			3.offsetWidth :
+			当前对象的宽度.
+			与style.width属性的区别在于:如对象的宽度设定值为百分比宽度,则无论页面变大还是变小,style.width都返回此百分比,而offsetWidth则返回在不同页面中对象的宽度值而不是百分比值
+			4.offsetHeight :
+			与style.height属性的区别在于:如对象的宽度设定值为百分比高度,则无论页面变大还是变小,style.height都返回此百分比,而offsetHeight则返回在不同页面中对象的高度值而不是百分比值
+			5.offsetParent :
+			当前对象的上级层对象.
+			注意.如果对象是包括在一个DIV中时,此DIV不会被当做是此对象的上级层,(即对象的上级层会跳过DIV对象)上级层是Table时则不会有问题.
+			利用这个属性，可以得到当前对象在不同大小的页面中的绝对位置．
+			7.scrollTop
+			对象的最顶部到对象在当前窗口显示的范围内的顶边的距离．
+			即是在出现了纵向滚动条的情况下，滚动条拉动的距离．
+			clientX, clientY是鼠标当前相对于网页的位置，当鼠标位于页面左上角时clientX=0, clientY=0；
+			offsetX, offsetY是鼠标当前相对于网页中的某一区域的位置，当鼠标位于页面中这一区域的左上角时offsetX=0, offsetY=0；
+			screenX, screenY是相对于用户显示器的位置
+			x,y是鼠标当前相对于当前浏览器的位置
+			</div>
+		</div>
+	</body>
+	<script>
+			window.onload = function (){
+				var oDiv1 = document.getElementById('div1');
+				var oDiv2 = document.getElementById('div2');
+				var oDiv3 = document.getElementById('div3');
+				var oDiv4 = document.getElementById('div4');
+
+				var iMaxTop = oDiv1.offsetHeight - oDiv2.offsetHeight;
+
+				oDiv2.onmousedown = function(ev){
+					var ev = ev || event;
+
+					var disY = ev.clientY - this.offsetTop;
+
+					document.onmousemove = function (ev){
+						var  ev = ev ||event;
+						var T = ev.clientY - disY;
+
+						if( T < 0 ){
+							T = 0;
+						}
+						else if ( T >iMaxTop){
+							T = iMaxTop;
+						}
+						oDiv2.style.top = T + 'px';
+						var iScale = T/iMaxTop;
+						// oDiv3.style.height = 500 * iScale + 'px';
+						oDiv4.style.top = (oDiv3.clientHeight - oDiv4.offsetHeight)*iScale + 'px';
+					}
+					document.onmouseup = function (){
+						document.onmousemove = document.onmouseup = null;
+					}
+					return false; /*禁止向上冒泡或禁止默认行为*/
+
+			}
+		}
+		</script>
+</html>
