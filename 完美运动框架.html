@@ -1,0 +1,107 @@
+<!Doctype HTML>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title></title>
+	<style>
+		#div1{
+			width: 50px;
+			height: 50px;
+			background: blue;
+			filter:alpha(opacity:30);
+			opacity: 0.2;
+			position: absolute;
+			left: 50px;
+			top: 50px;
+		}
+	</style>
+</head>
+<body>
+     <input id="button" type="button" value="点击调用"> 
+     <input id="button1" type="button" value="点击恢复">
+	<div id="div1"></div>
+</body>
+<script>
+window.onload = function (){
+	var oBtn = document.getElementById('button');
+	var oBtn1 = document.getElementById('button1');
+	var oDiv1=document.getElementById('div1');
+	oBtn.onclick = function (){
+
+		startMove(oDiv1,{width:100,height:300,opacity:100});
+	}
+	oBtn1.onclick = function (){
+
+		startMove(oDiv1,{width:50,height:50,opacity:20});
+	}
+}
+
+/**
+@tong biao 任意值变化 移动 
+**/
+
+function startMove(obj,json,fn)/*运动框架主函数*/
+{
+		clearInterval(obj.timer);
+	obj.timer = setInterval(function()
+	{
+		var bStop = true;//假设本次运动结束 所有数值到达预期
+		for(var attr in json)
+		{
+
+
+			var iCur=0;
+			if(attr=='opacity')
+			{
+				iCur=parseInt(parseFloat(getStyle(obj, attr))*100);
+			}
+			else
+			{
+				iCur=parseInt(getStyle(obj, attr));
+			}
+
+			//测算速度 获取速度 = (目标点 - 当前位置)/x
+			var iSpeed = (json[attr] - iCur)/8;
+			iSpeed = iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+
+			//检测停止
+			if(iCur != json[attr])
+			{
+				bStop=false;
+			}
+			if(attr=='opacity')
+				{
+					obj.style.filter='alpha(opacity:'+(iCur+iSpeed)+' )';/*字符串链接 有优先级*/
+					obj.style.opacity=(iCur+iSpeed)/100;
+				}
+				else
+				{
+					obj.style[attr] = iCur + iSpeed +'px';
+				}
+		
+		}
+		if(bStop)
+		{
+			clearInterval(obj.timer);
+				if(fn)
+				{
+					fn();	
+				}
+		}
+	},50)
+}
+function getStyle(obj, attr)/*获取对象 属性值*/
+{
+
+		if(obj.currentStyle)
+		{
+			return obj.currentStyle[attr];
+		}
+		else
+		{			
+			return getComputedStyle(obj, false)[attr];
+		}
+
+}
+</script>
+</html>
