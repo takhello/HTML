@@ -1,0 +1,134 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title></title>
+		<style>
+		div{
+			width: 50px;
+			height: 50px;
+			float: left;
+			background: red;
+			margin-top: 50px;
+			border: 1px solid black;
+			font-size: 14px;
+			}
+		#div4{
+			filter:alpha(opacity:20);
+			opacity: 0.2;
+		}
+		</style>
+	</head>
+	<body>
+		<div id=""></div>
+		<div id=""></div>
+		<div id="">currentStyle</div>
+		<div id=""></div>
+		<div id="div4"></div>
+	</body>
+	<script>
+	window.onload = function ()
+	{
+		var oDiv = document.getElementsByTagName('div');
+		// oDiv1.onmouseover = function (){
+		// 	startMove(300);
+		// }
+		// oDiv1.onmouseout = function (){
+		// 	startMove(100);
+		// }
+		// var i =0;
+		// for(i=0; i<oDiv.length; i++)
+		// {
+			
+		// 	oDiv[i].timer=null;
+		// 	oDiv[i].onmouseover = function ()
+		// 	{
+		// 		startMove(this, 'width',100);
+		// 	}
+		// 	oDiv[i].onmouseout = function ()
+		// 	{
+		// 		startMove(this, 'width' ,50);
+		// 	}
+		// }
+		oDiv[0].onclick=function()
+		{
+			startMove(this,'width',300);
+
+		}
+		oDiv[1].onclick=function()
+		{
+			startMove(this, 'height', 300);
+		}
+		oDiv[2].onclick=function()
+		{
+			startMove(this, 'fontSize', 100);
+		}
+		oDiv[3].onclick=function()
+		{
+			startMove(this, 'borderWidth', 50);
+		}
+		oDiv[4].onmouseover=function()
+
+		{
+
+			startMove(this, 'opacity', 100);
+		}
+		oDiv[4].onmouseout=function()
+		{
+			startMove(this, 'opacity', 20);
+		}
+
+	}
+	// var timer = null;
+
+	function startMove(obj,attr,iTarget)/*运动框架主函数*/
+	{
+		clearInterval(obj.timer);
+		obj.timer = setInterval(function()
+		{
+			var iCur=0;
+			if(attr=='opacity')
+			{
+				iCur=parseInt(parseFloat(getStyle(obj, attr))*100);
+			}
+			else
+			{
+				iCur=parseInt(getStyle(obj, attr));
+			}
+			var iSpeed = (iTarget - iCur)/8;//获取速度 = (目标点 - 当前位置)/x
+			iSpeed = iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+
+			if(iCur == iTarget)
+			{
+				clearInterval(obj.timer);
+			}
+			else
+			{
+				if(attr=='opacity')
+				{
+					obj.style.filter='alpha(opacity:'+(iCur+iSpeed)+' )';/*字符串链接 有优先级*/
+					obj.style.opacity=(iCur+iSpeed)/100;
+				}
+				else
+				{
+					obj.style[attr] = iCur + iSpeed +'px';
+				}
+			}
+		},50)
+	}
+	function getStyle(obj, attr)/*获取对象 属性值*/
+	{
+
+		if(obj.currentStyle)
+		{
+			return obj.currentStyle[attr];
+		}
+		else
+		{			
+			return getComputedStyle(obj, false)[attr];
+		}
+
+	}
+
+	</script>
+</html>
