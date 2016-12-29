@@ -1,0 +1,135 @@
+<!Doctype >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>无标题</title>
+<style>
+	#div{
+		width: 100px;
+		height: 100px;
+		border-radius: 50px;
+		background: blue;
+		position: absolute;
+	}
+	div{
+		width: 2px;
+		height: 2px;
+		position: absolute;
+		background: black;
+	}
+</style>
+</head>
+<body>
+<input id="button" value="开始运动" type="button">
+<div id="div"></div>
+</body>
+<script>
+window.onload = function ()
+{
+	var oBtn=document.getElementById('button');
+	var oDiv=document.getElementById('div');
+	oBtn.onclick=function(){
+		startMove();
+	}
+	//拖拽
+	var lastX=0;
+	var lastY=0;
+	oDiv.onmousedown = function(ev)
+	{
+		var ev=ev||event;
+		var disX=ev.clientX-oDiv.offsetLeft;
+		var disY=ev.clientY-oDiv.offsetTop;
+		document.onmousemove=function()
+		{
+			var ev=ev||event;
+			var left2=ev.clientX-disX;
+			var top2 =ev.clientY-disY;
+
+			oDiv.style.left=left2+'px';
+			oDiv.style.top=top2+'px';
+
+			/*加黑点*/
+			// var oBox=document.createElement('div');
+			// oBox.style.left=left2+'px';
+			// oBox.style.top=top2+'px';
+			// document.body.appendChild(oBox);
+			iSpeedX=left2 - lastX;
+			iSpeedY=top2  - lastY;
+
+			lastX=left2;
+			lastY=top2;
+			document.title='x:'+iSpeedX+'y:'+iSpeedY;
+		}
+		oDiv.onmouseup=function()
+		{
+			document.onmousemove=null;
+			document.onmouseup=null;
+			startMove();
+		};
+		clearInterval(timer);
+
+	}
+
+
+}
+
+
+/*重力+碰撞*/
+var iSpeedX=0;
+var iSpeedY=0;
+var timer=null;
+function startMove()
+{
+	clearInterval(timer);
+	timer=setInterval(function(){
+		var oDiv=document.getElementById('div');
+		iSpeedY+=3;
+		var left1=oDiv.offsetLeft + iSpeedX;
+		var top1 = oDiv.offsetTop + iSpeedY;
+
+		if(top1>=document.documentElement.clientHeight-oDiv.offsetHeight)
+		{
+			iSpeedY*=-0.8;
+			iSpeedX*=0.8;
+			top1=document.documentElement.clientHeight-oDiv.offsetHeight;
+
+		}
+		else if(top1<=0)
+		{
+			iSpeedY*=-1;
+			iSpeedX*=0.8;
+			top1=0;
+		}
+		if(left1>=document.documentElement.clientWidth-oDiv.offsetWidth)
+		{
+			iSpeedX*=-0.8;
+			left1=document.documentElement.clientWidth-oDiv.offsetWidth;
+		}
+		else if(left1<=0)
+		{
+			iSpeedX*=-0.8;
+			left1=0;
+		}
+		if(Math.abs(iSpeedX)<1)
+		{
+			iSpeedX=0;
+		}
+		if(Math.abs(iSpeedY)<1)
+		{
+			iSpeedY=0;
+		}
+		if(iSpeedY==0 && iSpeedX==0 && top1==document.documentElement.clientHeight-oDiv.offsetHeight)
+		{
+			clearInterval(timer);
+			// alert(0);
+		}
+		else
+		{
+			oDiv.style.left=left1+'px';
+			oDiv.style.top =top1+'px';
+		}
+	},30);
+}
+
+</script>
+</html>
