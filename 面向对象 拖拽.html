@@ -1,0 +1,77 @@
+<!Doctype HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title></title>
+<style>
+	#div{
+		width: 100px;
+		height: 100px;
+		background: blue;
+		position: absolute;
+		top: 100px;
+		left: 100px;
+	}
+	#div1{
+		width: 100px;
+		height: 100px;
+		background: yellow;
+		position: absolute;
+		top: 100px;
+		left: 100px;
+	}
+</style>
+</head>
+<body>
+<div id="div"></div>
+<div id="div1"></div>
+</body>
+<script>
+window.onload=function()
+{
+	new Drag('div');
+	new Drag('div1');
+}
+function Drag(id)
+{
+	var _this=this;
+	/*解决遇到事件后this指向改变的问题*/
+	this.disX=0;
+	this.disY=0;
+	this.oDiv= document.getElementById(id);
+	this.oDiv.onmousedown=function()
+	{
+		_this.fnDown();/*遇到事件this指向改变 的解决方法*/	
+	}
+}
+
+Drag.prototype.fnDown=function(ev)
+{
+	var _this=this;
+	var oEven=ev||event;
+	this.disX=oEven.clientX-this.oDiv.offsetLeft;
+	this.disY=oEven.clientY-this.oDiv.offsetTop;
+	document.onmousemove=function()
+	{
+		_this.fnMove();
+		/*遇到事件this指向改变 的解决方法*/
+	};
+	document.onmouseup=function()
+	{
+		_this.fnUp();/*遇到事件this指向改变 的解决方法*/
+	};
+};
+Drag.prototype.fnMove=function(ev)
+{
+	var oEven=ev||event;
+	this.oDiv.style.left=oEven.clientX-this.disX+'px';
+	this.oDiv.style.top =oEven.clientY-this.disY+'px';
+};
+
+Drag.prototype.fnUp=function()
+{
+	document.onmousemove=null;
+	document.onmouseup=null;
+};
+</script>
+</html>
