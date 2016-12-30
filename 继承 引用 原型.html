@@ -1,0 +1,121 @@
+<!Doctype HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>面向对象 拖拽</title>
+<style>
+	#div{
+		width: 100px;
+		height: 100px;
+		background: blue;
+		position: absolute;
+		top: 100px;
+		left: 100px;
+	}
+	#div1{
+		width: 100px;
+		height: 100px;
+		background: yellow;
+		position: absolute;
+		top: 100px;
+		left: 100px;
+	}
+</style>
+</head>
+<body>
+<div id="div"></div>
+<div id="div1">LimitDrag</div>
+</body>
+<script>
+window.onload=function()
+{
+	new Drag('div');
+	new LimitDrag('div1');
+}
+
+
+function Drag(id)
+{
+	var _this=this;
+	/*解决遇到事件后this指向改变的问题*/
+	this.disX=0;
+	this.disY=0;
+	this.oDiv= document.getElementById(id);
+	this.oDiv.onmousedown=function()
+	{
+		_this.fnDown();/*遇到事件this指向改变 的解决方法*/	
+		return false;/*处理 拖拽小BUG*/
+	}
+}
+Drag.prototype.fnDown=function(ev)
+{
+	var _this=this;
+	var oEven=ev||event;
+	this.disX=oEven.clientX-this.oDiv.offsetLeft;
+	this.disY=oEven.clientY-this.oDiv.offsetTop;
+	document.onmousemove=function()
+	{
+		_this.fnMove();
+		/*遇到事件this指向改变 的解决方法*/
+	};
+	document.onmouseup=function()
+	{
+		_this.fnUp();/*遇到事件this指向改变 的解决方法*/
+	};
+};
+Drag.prototype.fnMove=function(ev)
+{
+	var oEven=ev||event;
+	this.oDiv.style.left=oEven.clientX-this.disX+'px';
+	this.oDiv.style.top =oEven.clientY-this.disY+'px';
+};
+Drag.prototype.fnUp=function()
+{
+	document.onmousemove=null;
+	document.onmouseup=null;
+};
+
+
+/*******************引用 继承*****************/
+function LimitDrag(id)
+{
+	/*继承 父级属性 */
+	Drag.call(this, id);
+}
+
+for(var i in Drag.prototype)/*原型链*/
+{
+	LimitDrag.prototype[i]=Drag.prototype[i];
+}
+LimitDrag.prototype.fnMove=function(ev)
+{
+	var oEven=ev||event;
+	var oLeft=oEven.clientX-this.disX;
+	var oTop =oEven.clientY-this.disY;
+
+	if(oLeft<0)
+	{
+		oLeft=0;
+	}
+	else if(oLeft>document.documentElement.clientWidth-this.oDiv.offsetWidth)
+	{
+		oLeft=document.documentElement.clientWidth-this.oDiv.offsetWidth;
+	}
+
+	if(oTop<0)
+	{
+		oTop=0;
+	}
+	else if(oTop>document.documentElement.clientHeight-this.oDiv.offsetHeigh)
+	{
+		oTop=document.documentElement.clientHeigh-this.oDiv.offsetHeigh;
+	}
+
+
+	this.oDiv.style.left=oLeft+'px';
+	this.oDiv.style.top=oTop+'px';
+
+
+}
+</script>
+</html>
