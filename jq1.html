@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+	function btn_click()
+	{
+	 	var value =	$("#txtSearch").val();
+		// var value = $("#txtSearch").attr("value");
+
+		//筛选出 LI中包含value文本的元素
+		$("#container li:contains("+value+")").css("background", "yellow");
+	}
+	</script>
+</head>
+<body>
+	<div id="container">
+		<ul>
+			<li>java开发</li>
+			<li>ios开发</li>
+			<li>web开发</li>
+			<li>javascript使用</li>
+			<li>labview应用</li>
+			<li>英语学习</li>
+			<li>jsonp跨域原理</li>
+		</ul>
+		<input id="txtSearch">
+		<input type="button" value="显示" onclick="btn_click()" />
+	</div>
+</body>
+</html>
