@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	 var arr=[45,123,78,1,1,1,1,29,56,48,24,45,78,"78"];
+	//  var arr2;
+	//  document.write(arr+"<br/>");
+
+	//  function DuplicateRemoval(arr)
+	//  {
+	//  	var arr1 = [];
+	//  	var json1 = {};
+	//  	for(var i=0; i<arr.length; i++)
+	//  	{
+	//  		if(!json1[arr[i]])
+	//  		{
+	//  			arr1.push(arr[i]);
+	//  			json1[arr[i]] = 1;
+	//  		}
+	//  	}
+	//  	return arr1;
+	//  }
+	// arr2 =  DuplicateRemoval(arr);
+	// document.write(arr2);
+	for(var i=0; i<arr.length; i++)
+	{
+		for(var j=i+1; j<arr.length; j++)
+		{
+			if(arr[i] === arr[j])  //用全等
+			{
+				arr.splice(j,1);
+				j--;
+			}
+		}
+	}
+	console.log(arr);
+
+
+
+</script>
+</html>
