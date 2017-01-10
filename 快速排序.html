@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+function quickSort(arr)
+{
+	if(arr.length <= 1)
+	{
+		return arr;
+	}
+	var leftArr = [];
+	var rightArr = [];
+	var q = arr[0];
+
+	for(var i=1; i<arr.length; i++)
+	{
+		if(arr[i]<q)
+		{
+			leftArr.push(arr[i]);
+		}
+		else
+		{
+			rightArr.push(arr[i]);
+		}
+		
+	}
+	return [].concat(quickSort(leftArr),[q],quickSort(rightArr));
+}
+var arr1 = [123,48,321,56,12,846,12356,1248,1235,35,21,1];
+console.log(arr1);
+
+console.log(quickSort(arr1));
+
+</script>
+</html>
