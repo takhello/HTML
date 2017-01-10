@@ -8,8 +8,8 @@
 	
 </body>
 <script>
-var arr = [23,25,45,12,59,2,15,4,4,4,4];
-	 console.log(arr);
+var arr = [23,25,45,12,59,2,15,4,4,4,4,"23"];
+	 // console.log(arr);
 
 	Array.prototype.sortNum = function ()/*排序 冒泡*/
 	{
@@ -35,21 +35,47 @@ var arr = [23,25,45,12,59,2,15,4,4,4,4];
 	 {
 	 	var arr1 = [];
 	 	var json1 = {};
-	 	var arr4 = this;
-	 	for(var i=0; i<arr4.length; i++)
+	 	for(var i=0; i<this.length; i++)
 	 	{
-	 		if(!json1[arr4[i]])
+	 		if(!json1[this[i]] )
 	 		{
-	 			arr1.push(arr4[i]);
-	 			json1[arr4[i]] = 1;
+				arr1.push(this[i]);
+	 			json1[this[i]] = 1;
 	 		}
+	 		
 	 	}
 	 	return arr1;
 	 }
-	 console.log(arr.sortNum());
+	 // console.log(arr);
+	 // console.log(arr.sortNum());
 	 console.log(arr.delSame());
 
-	 console.log(arr);
+
+/*这个方法可以 识别 字符串"23"   和数字 23*/
+	 Array.prototype.delSame1 = function ()
+	 {
+	 	var arr = [];
+	 	for(var i=0; i<this.length; i++)
+	 	{
+	 		var addthisone = true;
+	 		for(var j=0; j<arr.length; j++)
+	 		{
+	 			if(this[i] === arr[j])
+	 			{
+					addthisone = false;
+					break;
+	 			}
+	 		}
+	 		if(addthisone)
+	 		{
+	 			arr.push(this[i]);
+	 		}
+
+	 	}
+	 	return arr;
+	 }
+	 console.log(arr.delSame1());
+
 
 
 
@@ -67,7 +93,7 @@ var arr = [23,25,45,12,59,2,15,4,4,4,4];
 	 	var arr3 = arr2.join("");
 	 	return arr3;
 	 }
-	 console.log(str.revers());
+	 // console.log(str.revers());
 
 
 </script>
