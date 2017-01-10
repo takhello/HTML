@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+var arr = [23,25,45,12,59,2,15,4,4,4,4];
+	 console.log(arr);
+
+	Array.prototype.sortNum = function ()/*排序 冒泡*/
+	{
+		var nun;
+		for(var i=0; i<this.length; i++)
+		{
+			for(var j=i+1; j<this.length; j++)
+			{
+
+				if(this[i]>this[j])
+				{
+					num = this[j];
+					this[j] = this[i];
+					this[i] = num;
+				}
+			}
+
+		}
+		return this;
+	}
+
+	 Array.prototype.delSame = function ()/*去重*/
+	 {
+	 	var arr1 = [];
+	 	var json1 = {};
+	 	var arr4 = this;
+	 	for(var i=0; i<arr4.length; i++)
+	 	{
+	 		if(!json1[arr4[i]])
+	 		{
+	 			arr1.push(arr4[i]);
+	 			json1[arr4[i]] = 1;
+	 		}
+	 	}
+	 	return arr1;
+	 }
+	 console.log(arr.sortNum());
+	 console.log(arr.delSame());
+
+	 console.log(arr);
+
+
+
+	 var str = "hello word";
+	 String.prototype.revers = function (){
+	 	var arr1 = this.split("");
+	 	var arr2 = [];
+	 	var j=0;
+
+	 	for(var i=0; i<arr1.length; i++)
+	 	{
+	 		arr2.push(arr1[arr1.length-j-1]);
+	 		j++;
+	 	}
+	 	var arr3 = arr2.join("");
+	 	return arr3;
+	 }
+	 console.log(str.revers());
+
+
+</script>
+</html>
