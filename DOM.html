@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.wrap{
+		background: #d7eff8;
+	}
+	.wrap1{
+		height: 2000px;
+		width: 1000px;
+		margin: 0 auto;
+		padding-top: 20px;
+		background: #e6ccf2;
+	}
+	.wrap2{
+		height: 300px;
+		background: #f5eeee;
+		margin: 20px auto 20px ;
+	}
+	.wrap3{
+		height: 300px;
+		background: #f5eeee;
+		margin: 0px auto 20px ;
+	}
+	.wrap4{
+		height: 50px;
+		width: 50px;
+		line-height: 50px;
+		text-align: center;
+		background: #d1f3cc;
+
+		position: fixed;/*定位到 右下角*/
+		right: 0;
+		bottom: 0;
+	}
+	</style>
+</head>
+<body>
+<div class="wrap" >
+	<input id="btn" type="button" value="打开窗口">
+	<input id="btn1" type="button" value="打印窗口">
+	<input id="btn2" type="button" value="confirm()方法">
+	<input id="btn3" type="button" value="prompt()方法">
+	<input id="btn4" type="button" value="scrollTo()方法">
+	<input id="btn5" type="button" value="scrollTo()方法的例子">
+	<input id="btn6" type="button" value="navigator的属性">
+	<input id="btn7" type="button" value="userAgent返回浏览器头部信息">
+</div>
+<div class="wrap1">
+	<div class="wrap3">1</div>
+	<div class="wrap2">2</div>
+	<div class="wrap2">3</div>
+	<div class="wrap2">4</div>
+	<div class="wrap2">5</div>
+	<div class="wrap2">6</div>
+	<div class="wrap2">7</div>
+	<div id="div1" class="wrap4">GOTop</div>
+
+</div>
+</body>
+<script>
+
+console.log("文档显示区Height"+window.innerHeight);
+console.log("文档显示区Widht"+window.innerWidth);
+console.log("外部Height"+window.outerHeight);
+console.log("外部Height"+window.outerWidth);
+
+var btn = document.getElementById("btn");
+var btn1 = document.getElementById("btn1");
+var btn2 = document.getElementById("btn2");
+var btn3 = document.getElementById("btn3");
+var btn4 = document.getElementById("btn4");
+var div1 = document.getElementById("div1");
+var btn6 = document.getElementById("btn6");
+var btn7 = document.getElementById("btn7");
+
+
+/******************************************/
+btn.onclick = function()
+{
+	window.open("http://www.sina.com.cn","1");
+}
+
+
+/******************************************/
+btn1.onclick = function ()
+{
+	window.print();
+}
+
+/******************************************/
+btn2.onclick = function ()
+{
+	var k = window.confirm("confirm()的方法返回true或false");
+	if(k)
+	{
+		document.write("返回了true");
+	}
+	else
+	{
+		document.write("返回了false");
+	}
+}
+
+/******************************************/
+btn3.onclick = function()
+{
+	var num1 = Math.ceil(Math.random()*100);
+	alert("产生的随机数"+num1);
+	var j=0;
+	var mak1 = false;
+	for(var i=0; i<10; i++)
+	{	
+		j++;
+		var name = prompt("请输入1--100以内的数字");
+		name = Number(name);
+
+		if(name == null )
+		{
+			break;
+		}
+		if( !name )
+		{
+			alert("输入有误");
+			// continue;
+		}
+
+		if( name > num1)
+		{
+			alert("大了");
+		}
+		else if(name < num1)
+		{
+			alert("小了");
+		}
+		else if(name === num1)
+		{
+			alert("猜对了");
+			break;
+		}
+		if(j==10)
+		{
+			alert("智商欠费");
+			var k = confirm("是否需要充值？")
+			if(k)
+			{
+				i-=3;
+				j-=3;
+			}
+			
+		}
+	}
+
+	//注意   Prompt 获取到的是字符串
+}
+
+
+/******************************************/
+btn4.onclick = function()
+{
+	scrollTo(0,1200);//跳转到 指定坐标
+	alert("跳转到 0,1200px");
+
+	// console.log(document.body.scrollTo);
+}
+/******************************************/
+div1.onclick = function ()
+{
+	var inter =setInterval(function(){
+		// console.log(document.body.scrollTop);
+		//获取当前的滚动值
+		var st = document.body.scrollTop || document.documentElement.scrollTop;
+		st/=2;
+		scrollTo(0,st);
+
+		if(st<=1)
+		{
+			clearInterval(inter);
+		}
+	},30);
+
+}
+btn6.onclick = function()
+{
+	console.log("浏览器的代码名"+navigator.appCodeName);
+	console.log("浏览器的名称"+navigator.appName);
+	console.log("浏览器的平台和版本信息"+navigator.appVersion);
+	console.log("浏览器是否启用cookie"+navigator.cookieEnabled);
+	console.log("运行浏览器的操作系统平台"+navigator.platform);
+	console.log("由客户机发送服务器的 user-agent 头部信息"+navigator.userAgent);
+
+}
+
+btn7.onclick =  function()
+{
+	var userAgent = navigator.userAgent;
+	console.log(userAgent);
+	if(userAgent.indexOf("Chrome") != -1)
+	{
+		console.log("您在使用的是Chrome浏览器");
+	}
+	else if(userAgent.indexOf("Firefox") != -1)
+	{
+		console.log("您在使用的是Firefox浏览器");
+	}
+	else if(userAgent.indexOf("MSIE") != -1)
+	{
+		console.log("您在使用的是IE浏览器");
+	}
+}
+
+
+
+function myBrowser(){
+    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+    if (userAgent.indexOf("Opera") > -1;) 
+    {
+	   	 alert("你在使用的 IE");  	     
+    }; 
+    if (userAgent.indexOf("Firefox") > -1) 
+    {
+ 	   alert("你在使用的 Firefox");    
+    } 
+    if (userAgent.indexOf("Chrome") > -1)
+    {
+  	  alert("你在使用的 Chrome"); 		
+ 	}
+    if (userAgent.indexOf("Safari") > -1) 
+    {
+    	alert("你在使用的 Opera");    
+    } 
+    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) 
+    {
+        alert("你在使用的 Safari");
+    };
+}
+
+</script>
+</html>
