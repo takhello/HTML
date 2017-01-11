@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+</body>
+<script>
+	function Student(name, sex, age, like)
+	{
+		this.name = name;
+		this.sex = sex;
+		this.age = age;
+		this.like = like;
+
+		this.sayname = function()
+		{
+			console.log(this.name);
+		}
+		this.hello = function()
+		{
+			console.log("名字:" + this.name+";性别:" + this.sex + ";年龄:" + this.age + ";爱好:"+this.like);
+		}
+	}
+
+	var student01 = new Student("Mr1","男","16","计算");
+	var student02 = new Student("Mr2","女","26","音乐");
+	var student03 = new Student("Mr3","女","22","美术");
+	var student04 = new Student("Mr4","男","24","音乐");
+	var student05 = new Student("Mr5","女","23","ms");
+
+	var arr =[student01,student02,student03,student04,student05];
+	for(var i=0; i<arr.length; i++)
+	{
+		console.log(arr[i].name);
+	}
+	for(var p in student01)
+	{
+		//枚举
+		console.log(p + " :"+student01[p]);// 注意中括号的
+	}
+	student01.sayname();
+	student01.hello();
+</script>
+</html>
