@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+    var str = "    hello world  ";
+
+	String.prototype.trim = function()
+	{
+		var myreg =/(^\s+|\s+$)/g;
+		return this.replace(myreg,"");
+
+	}
+    console.log(str);
+	
+
+	console.log(str.trim());
+
+</script>
+</html>
