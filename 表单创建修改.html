@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-1.11.1.js"></script>
+	<style>
+		table{
+			width: 700px;
+			border-collapse: collapse;
+			/*单 边框；*/
+		}
+		td{
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>书名</td>
+			<td>价格</td>
+			<td>库存</td>
+			<td>操作</td>
+		</tr>
+		<tr>
+			<td>机器猫</td>
+			<td>3.6</td>
+			<td>100</td>
+			<td>
+				<input type="button" value="修改"/>
+				<input type="button" value="删除"/>
+			</td>
+		</tr>
+		<tr>
+			<td>机器狗</td>
+			<td>2.5</td>
+			<td>300</td>
+			<td>
+				<input type="button" value="修改"/>
+				<input type="button" value="删除"/>
+			</td>
+		</tr>
+		<tr>
+			<td><input id="bookName" type=""/></td>
+			<td><input id="bookPrice" type=""/></td>
+			<td><input id="bookStorag" type=""/></td>
+			<td><input type="button" value="增加"/></td>
+		</tr>
+	</table>
+	<script>
+	function changeColor()
+	{
+		$("tr:not(:first):not(:last):odd").css({background:"#b8dbf8"});
+		$("tr:not(:first):not(:last):even").css({background:"#e5f0d2"});
+	}
+
+	function initial()//初始化 
+	{
+		changeColor();
+		$("input[value='增加']").click(function()
+		{
+			//获取 三个文本框的值
+			var bName = $("#bookName").val();
+			var bPrice = $("#bookPrice").val();
+			var bStorage = $("#bookStorag").val();
+
+			
+			//创建四个td 一个tr
+			var $td1 = $("<td>"+bName+"</td>");
+			var $td2 = $("<td></td>");
+			$td2.text(bPrice);
+			var $td3 = $("<td>"+bStorage+"</br>");
+			var $td4 = $("<td></td>");
+			//克隆修改删除
+			var $update = $($("input[value='修改']").get(0)).clone(true);
+			var $delete = $($("input[value='删除']").get(0)).clone	(true);
+			$td4.append($update);
+			$td4.append(" ");
+			$td4.append($delete);
+
+			//将td添加到tr中
+			var $tr = $("<tr></tr>");
+			$tr.append($td1);
+			$tr.append($td2);
+			$tr.append($td3);
+			$tr.append($td4);
+  			//将tr 添加到table 的不是最后一行的最后一行
+  			
+  			$("tr:last").before($tr);
+  			// before() 方法在被选元素前插入指定的内容。
+  			$("#bookName").val('');
+  			$("#bookPrice").val('');
+  			$("#bookStorag").val('');
+			
+			changeColor();
+			//为删除按钮添加事件
+		
+		});
+			$("input[value='删除']").click(function(e)
+			{
+				// console.log(e.target);
+				// console.log(this);
+				//target 事件属性可返回事件的目标节点（触发该事件的节点），如生成事件的元素、文档或窗口。
+				$(this).parent().parent().remove();
+				// parent() 获得当前匹配元素集合中每个元素的父元素，使用选择器进行筛选是可选的
+				changeColor();
+			});
+			$("input[value='修改']").click(function(){
+				if($(this).val()=='修改')
+				{
+					$(this).val("确定");
+					var tds = $(this).parent().siblings();
+					for(var i=0; i<tds.length; i++)
+					{
+						var $td = $(tds.get(i));
+						$td.html("<input  value='"+$td.text()+"' />");					
+					}
+
+				}
+				else
+				{
+					$(this).val("修改");
+					var tds = $(this).parent().siblings();
+					for(var i=0; i<tds.length; i++)
+					{
+						var $td = $(tds[i]);
+						var $ipt = $($td.children()[0]);
+						$td.text($ipt.val());
+					}
+				}
+			});
+	}
+	window.onload = function()
+	{
+		initial()
+	}
+	</script>
+</body>
+</html>
