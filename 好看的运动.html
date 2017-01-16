@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0px;
+		padding: 0px;
+	}
+		#warp1{
+			width: 900px;
+			height: 400px;
+			background: #384259;
+			margin-top: 80px;
+			margin-left: 80px;
+			border: 10px solid #F73859;
+			position: relative;
+		}
+		#ball{
+			width: 50px;
+			height: 50px;
+			border-radius: 25px;
+			background: #7AC7C4;
+			position: absolute;
+			left: 0;
+		}
+		#ball1{
+			width: 30px;
+			height: 30px;
+			border-radius: 15px;
+			background: #C4EDDE;
+			position: absolute;
+			left: 20px;
+			top: 20px;
+		}
+		#ball2{
+			width: 40px;
+			height: 40px;
+			border-radius: 20px;
+			background: #71C9CE;
+			position: absolute;
+			left: 3px;
+			top: 30px;	
+		}
+		#ball3{
+			width: 60px;
+			height: 60px;
+			border-radius: 30px;
+			background: #DD5B82;
+			position: absolute;
+			left: 50px;
+			top: 50px;	
+
+		}
+		#ball4{
+			width: 20px;
+			height: 20px;
+			border-radius: 10px;
+			background: #29C6CD;
+			position: absolute;
+			left: 60px;
+			left: 80px;
+		}
+		.POSITION{
+			position: absolute;
+	
+		}
+
+	</style>
+</head>
+<body>
+<div id="warp">
+	<div id="warp1" class="warp1">
+		<div id="ball" style="">
+		</div>
+		<div id="ball1" style="">
+		</div>
+		<div id="ball2" style="">
+		</div>
+		<div id="ball3" style="">
+		</div>
+		<div id="ball4" style="">
+		</div>
+
+		<div id="ball5" class="POSITION" style="">
+		</div>
+		<div id="ball6" class="POSITION" style="">
+		</div>
+		<div id="ball7" class="POSITION" style="">
+		</div>
+
+	</div>
+	<input id="btn1" type="button" value="返回位置属性">
+	<input id="btn2" type="button" value="移动">
+</div>
+</body>
+<script>
+btn1.onclick = function()
+{
+	// var oDiv1 = document.getElementById("warp1");
+	// console.log("可视高度"+oDiv1.clientHeight); 
+	// console.log("可视宽度"+oDiv1.clientWidth); 
+	// console.log("元素高度"+oDiv1.offsetHeight); 
+	// console.log("元素宽度"+oDiv1.offsetWidth); 
+	// console.log("偏移left"+oDiv1.offsetLeft); 
+	// console.log("便宜top"+oDiv1.offsetTop); 
+	// oDiv1.innerHTML = "可视高度"+oDiv1.clientHeight;
+	// oDiv1.innerHTML = "可视宽度"+oDiv1.clientWidth;
+}
+btn2.onclick = function()
+{
+	var oDiv1 =document.querySelector("#warp1");
+
+	var oDiv2 = document.getElementById("ball");
+	var oDiv3 = document.getElementById("ball1");
+	var oDiv4 = document.getElementById("ball2");
+	var oDiv5 = document.getElementById("ball3");
+	var oDiv6 = document.getElementById("ball4");
+
+	var oDiv7 = document.getElementById("ball5");
+	var oDiv8 = document.getElementById("ball6");
+	var oDiv9 = document.getElementById("ball7");
+
+
+ 	remove(oDiv2,"15px","5px",8);
+ 	remove(oDiv3,"11px","9px",12);
+
+ 	remove(oDiv4,"16px","2px",2);
+ 	remove(oDiv5,"3px","92px",10);
+ 	remove(oDiv6,"55px","3px",6);
+
+ 	remove(oDiv7,"52px","38px",6, "70px", "70px","35px","#222222");
+ 	remove(oDiv8,"95px","52px",16, "70px", "70px","35px","#9EFCB4");
+ 	remove(oDiv9,"125px","54px",2, "70px", "70px","35px","#09A8FA");
+
+	function remove(obj,left,top,speed,width,height,Radius,background)
+	{
+		
+		obj.style.left = left; //必须添加 行内样式 这样才能获取初始值
+		obj.style.top = top;
+		obj.style.width = width;
+		obj.style.height = height;
+		obj.style.borderRadius = Radius;
+		obj.style.background = background;
+
+		var speed =speed;
+		var mark =1;
+		var mark1 =1;
+
+		var inter = setInterval(ruBal,10);	//setInertval 会修改 ruBal()中的  参数 值  注意
+		function ruBal()
+		{
+			var warpWidth = oDiv1.clientWidth;
+			var warpHeight = oDiv1.clientHeight;
+			var ballWidth = obj.offsetWidth;
+			var ballHeight = obj.offsetHeight;
+	 
+			obj.style.left =parseInt(obj.style.left) + mark*speed +"px";
+			obj.style.top =parseInt(obj.style.top) + mark1*speed +"px";
+			var oLeft1 = parseInt(obj.style.left);
+			var oTop1 = parseInt(obj.style.top);
+			
+			if(oLeft1>(warpWidth-ballWidth))
+			{
+				obj.style.left =warpWidth-ballWidth +"px";
+				// obj.style.top =warpWidth-ballWidth +"px";
+	     	 	mark = -1;
+			}
+			else if (oLeft1<0)
+			{
+				obj.style.left ="0px";
+	       	 	 mark = 1;
+			}
+			else if (oTop1>(warpHeight-ballHeight))
+			{
+				obj.style.Top =warpHeight-ballHeight +"px";
+	       	 	 mark1 = -1;
+			}
+			else if (oTop1<0)
+			{
+				obj.style.top ="0px";
+	       	 	 mark1 = 1;
+			}
+		}
+	}	
+
+}
+</script>
+</html>
