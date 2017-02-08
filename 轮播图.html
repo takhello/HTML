@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body{
+
+		}
+		.box{
+			position: relative;
+			margin: 0 auto;
+			height: 300px;  
+			width: 1000px;
+			border: 3px solid #F6AAE9;
+			perspective: 800px; /*放置 摄影机 上帝视角*/
+			transform-style: preserve-3d;/*设置3D效果*/
+			overflow: hidden;
+
+		}
+		img{
+			position: absolute;
+			top: 50px;
+			width: 150px;
+			height: 150px;
+			transition: all .5s; /*过渡属性 设置*/
+
+		}
+		img.left{
+			transform: rotateY(45deg);/*设置Y轴旋转*/
+			transform: rotateX(80deg);/*设置Y轴旋转*/
+			 /* transform: rotateZ(135deg); */
+			 /*设置Y轴旋转 */
+			opacity: 1; /*设置透明度*/
+		}
+		img.right{
+			transform: rotateY(-45deg);
+			transform: rotateX(80deg);/*设置Y轴旋转*/
+
+			 /* transform: rotateZ(135deg); */
+			 /*设置Y轴旋转 */
+
+			opacity: 1;
+		}
+		img.mid{
+			transform: translateZ(120px);
+			opacity: 1;
+			z-index: 999;
+			animation: a .6s;
+		}
+
+		@keyframes a{
+			0%{
+				transform:  rotateZ(180deg) rotateX(180deg) rotateY(180deg);
+			}
+			100%{
+				transform:  rotateZ(0) rotateX(0) rotateY(0);
+			}
+		}
+
+	</style>
+</head>
+<body>
+	<div id="box" class="box">
+		<img src="images/flower1.jpg" alt="">
+		<img src="images/flower2.jpg" alt="">
+		<img src="images/flower3.jpg" alt="">
+		<img src="images/flower4.jpg" alt="">
+		<img src="images/flower5.jpg" alt="">
+		<img src="images/flower5.jpg" alt="">
+		<img src="images/flower6.jpg" alt="">
+		<img src="images/flower7.jpg" alt="">
+<!-- 		<img src="images/flower8.jpg" alt="">
+		<img src="images/flower9.jpg" alt="">
+		<img src="images/flower10.jpg" alt="">
+		<img src="images/flower11.jpg" alt="">
+		<img src="images/flower12.jpg" alt=""> -->
+	</div>
+<script type="text/javascript">
+	var oBox = document.querySelector("#box");
+	var oImg = oBox.querySelectorAll("img");
+	
+	var mid_num = Math.floor(oImg.length/2);
+	// console.log(mid_num);
+	var img_left = (oBox.clientWidth - oImg[mid_num].offsetWidth)/2;
+	// console.log(img_left);
+	play(mid_num);
+	function play(mid_num)
+	{
+		// oImg[mid_num].style.left = img_left + "px";
+		for(var i=0; i<oImg.length; i++)
+		{
+			oImg[i].style.left = img_left - [mid_num - i]*80 + "px";/*计算第i个图片的style.left的值 赋值*/
+			if(i < mid_num)
+			{
+				oImg[i].setAttribute("class","left");/*赋值*/
+				oImg[i].style.zIndex = i;
+			}
+			if(i > mid_num)
+			{
+				oImg[i].setAttribute("class","right");/*赋值*/
+				oImg[i].style.zIndex = -i;
+			}
+			if(i == mid_num)
+			{
+				oImg[i].setAttribute("class","mid");/*赋值*/
+				oImg[i].style.zIndex = 999;
+
+			}
+			oImg[i].index = i;/* 保存 索引值 保存脚标*/
+
+			oImg[i].onclick = function()
+			{
+				console.log(i);
+				console.log(this);
+				console.log(this.index);
+				
+				play(this.index);
+
+			}
+		}
+
+
+		// for(var i=0; i<oImg.length; i++)
+		// {
+		// 	(function(i){
+		// 		oImg[i].onclick = function()
+		// 		{
+		// 			alert(i);
+		// 		}
+		// 	})(i);
+		// }
+	}
+	oIndex = mid_num;/*设置 一个全局 变量 来保存 当前的 图片下标*/
+	var oSpeed = 1;
+	setInterval(autoplay,1000);
+	function autoplay()
+	{
+		oIndex =oIndex + oSpeed;
+
+		if(oIndex >= oImg.length-1)
+		{
+			oSpeed = -oSpeed;
+		}
+	 	else if(oIndex <= 0)
+		{
+			oSpeed = -oSpeed;
+		}
+		play(oIndex);
+	}
+
+</script>
+</body>
+</html>
