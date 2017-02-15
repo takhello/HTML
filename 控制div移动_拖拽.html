@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			border: none;
+			text-decoration: none;
+			list-style: none;
+			font-family: "微软雅黑";
+		}
+		body{
+			background: #41EECB;
+			
+		}
+		.warp{
+			position: relative;/*如果要设置 全屏 必须 加上相对定位*/
+			width: 100%;
+			border-radius: 10px;
+		}
+		.div_1,
+		.div_2{
+			position: absolute;
+			top: 0px;
+			left:0px;
+
+			width: 100px;
+			height: 100px;
+			background: #FCD78E;
+			border-radius: 5px;
+			cursor:pointer;
+		}
+		.div_2{
+			background: #FC5185;
+		}
+	</style>
+</head>
+<body>
+	<div class="warp">
+		<div class="div_1"></div>
+		<div class="div_2"></div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	window.onload = function()
+	{
+		var oDiv = document.querySelector(".div_1");
+		var oDiv2 = document.querySelector(".div_2");
+		var left = false;
+		var top  = false;
+		var right = false;
+		var bottom = false;
+		var speed = 3;
+
+		setInterval(oMove,30);
+		function oMove()
+		{
+			if(right)
+			{
+				oDiv.style.left = oDiv.offsetLeft + speed +"px";
+				console.log(1);
+			}
+			if(left)
+			{
+				oDiv.style.left = oDiv.offsetLeft - speed +"px";
+				console.log(2);
+			}
+			if(top)
+			{
+				oDiv.style.top = oDiv.offsetTop - speed +"px";
+				console.log(3);
+			}
+			if(bottom)
+			{
+				oDiv.style.top = oDiv.offsetTop + speed +"px";
+				console.log(4);
+			}
+		}
+
+		/*
+		*按键检测  用docment
+		*ev = ev||event;
+		 */
+		document.onkeydown = function(ev)
+		{
+			var ev = ev || event;
+			var evCode = ev.keyCode; //37 38 39 40
+			//switch 语句
+			switch(evCode) 
+			{
+				case 37: left=true; break;
+				case 38: top=true; break;
+				case 39: right=true; break;
+				case 40: bottom=true; break;
+			}
+		}
+		document.onkeyup = function(ev)
+		{
+			var ev = ev || event;
+			var evCode = ev.keyCode;
+			switch(evCode)
+			{
+				case 37: left=false;break;
+				case 38: top = false;break;
+				case 39: right = false;break;
+				case 40: bottom =false;break;
+			}
+		}
+		run(oDiv);
+		run(oDiv2);
+		/*谷歌里面的  自我保护 出现 禁止现象*/
+		function run(ball)
+		{
+			ball.onmousedown = function(ev)
+			{
+				var _this = this;
+				var ev =ev||event;
+				var x =ev.clientX -this.offsetLeft;
+				var y =ev.clientY -this.offsetTop ;
+				window.onmousemove = function(ev){
+					ball.style.left =ev.clientX -x + "px";
+					ball.style.top =ev.clientY -y + "px";
+				}
+				window.onmouseup = function(ev)
+				{
+					window.onmousemove=null;
+				}
+			}
+		}
+	}
+</script>
+
+</html>
