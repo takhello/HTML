@@ -26,7 +26,6 @@ function up()
 			if(top<=5)
 			{
 				/*解决 在向上滚动时 滑动滚轮依然产生滚动的BUG */
-				clearInterval(timer);
 				clearInterval(inter);
 				timer =setInterval(_judge,30);
 			}
