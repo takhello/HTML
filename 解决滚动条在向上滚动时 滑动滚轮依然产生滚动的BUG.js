@@ -22,7 +22,6 @@ function up()
 		var inter = setInterval(function(){
 			top/=1.5;
 			scrollTo(0,top);
-			console.log(top);
 			if(top<=5)
 			{
 				/*解决 在向上滚动时 滑动滚轮依然产生滚动的BUG */
